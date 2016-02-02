@@ -79,9 +79,10 @@ namespace TrabalhoPO {
         }
 
         public void Solve() {
-            //PrintTableau();
+            Console.WriteLine("Initial Tableau");
+            PrintTableau();
             while (!IsOptimalSolution()) {
-                PrintTableau();
+                //PrintTableau();
                 int j = FindPivotCollumn();
                 int k = FindPivotRow(j);
                 Console.WriteLine("Pivot Collumn: {0}", j);
@@ -89,19 +90,19 @@ namespace TrabalhoPO {
                 symplexTableau[k].Divide(symplexTableau[k][j]);
                 Console.WriteLine("Dividing the Pivot line {0} by the pivot Element {1}", k, symplexTableau[k][j]);
                 
-                PrintTableau();
+                //PrintTableau();
                 //Console.ReadKey();
                 for (int i = 0; i < symplexTableau.Count; i++) {
                     if (i == k) {
-                        Console.WriteLine("i == k");
+                        //Console.WriteLine("i == k");
                         continue;
                     }
                     var aux = new List<double>(symplexTableau[k]);
                     aux.Multiply(symplexTableau[i][j]);
                     symplexTableau[i].SubtractList(aux);
-                    PrintTableau();
+                    //PrintTableau();
                 }
-                //PrintTableau();
+                PrintTableau();
                 //Thread.Sleep(2000);
             }
             
@@ -141,6 +142,10 @@ namespace TrabalhoPO {
 
         public void PrintTableau() {
             Console.WriteLine();
+            for(var i = 0; i < symplexTableau[0].Count-1; i++)
+				Console.Write("{0,5} ","x" + (i+1));
+			Console.Write("{0,5}", "z");
+			Console.WriteLine();
             foreach (var list in symplexTableau) {
                 foreach (var d in list) {
                     Console.Write("{0,5} ", d);
